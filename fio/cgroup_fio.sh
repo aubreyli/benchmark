@@ -1,0 +1,16 @@
+cgexec -g cpu:fio_root/fio1 fio -filename=/dev/sda -direct=1 -iodepth 1 -thread -rw=read -ioengine=psync -bs=16k -size=1000M -numjobs=100 -runtime=1000000 -group_reporting -name=mytest1 &
+cgexec -g cpu:fio_root/fio2 fio -filename=/dev/sda -direct=1 -iodepth 1 -thread -rw=read -ioengine=psync -bs=16k -size=1000M -numjobs=100 -runtime=1000000 -group_reporting -name=mytest1 &
+cgexec -g cpu:fio_root/fio3 fio -filename=/dev/sda -direct=1 -iodepth 1 -thread -rw=read -ioengine=psync -bs=16k -size=1000M -numjobs=100 -runtime=1000000 -group_reporting -name=mytest1 &
+cgexec -g cpu:fio_root/fio4 fio -filename=/dev/sda -direct=1 -iodepth 1 -thread -rw=read -ioengine=psync -bs=16k -size=1000M -numjobs=100 -runtime=1000000 -group_reporting -name=mytest1 &
+cgexec -g cpu:fio_root/fio5 fio -filename=/dev/sda -direct=1 -iodepth 1 -thread -rw=read -ioengine=psync -bs=16k -size=1000M -numjobs=100 -runtime=1000000 -group_reporting -name=mytest1 &
+cgexec -g cpu:fio_root/fio6 fio -filename=/dev/sda -direct=1 -iodepth 1 -thread -rw=read -ioengine=psync -bs=16k -size=1000M -numjobs=100 -runtime=1000000 -group_reporting -name=mytest1 &
+cgexec -g cpu:fio_root/fio7 fio -filename=/dev/sda -direct=1 -iodepth 1 -thread -rw=read -ioengine=psync -bs=16k -size=1000M -numjobs=100 -runtime=1000000 -group_reporting -name=mytest1 &
+cgexec -g cpu:fio_root/fio8 fio -filename=/dev/sda -direct=1 -iodepth 1 -thread -rw=read -ioengine=psync -bs=16k -size=1000M -numjobs=100 -runtime=1000000 -group_reporting -name=mytest1 &
+cgexec -g cpu:fio_root/fio9 fio -filename=/dev/sda -direct=1 -iodepth 1 -thread -rw=read -ioengine=psync -bs=16k -size=1000M -numjobs=100 -runtime=1000000 -group_reporting -name=mytest1 &
+cgexec -g cpu:fio_root/fio10 fio -filename=/dev/sda -direct=1 -iodepth 1 -thread -rw=read -ioengine=psync -bs=16k -size=1000M -numjobs=100 -runtime=1000000 -group_reporting -name=mytest1 &
+cgexec -g cpu:fio_root/fio11 fio -filename=/dev/sda -direct=1 -iodepth 1 -thread -rw=read -ioengine=psync -bs=16k -size=1000M -numjobs=100 -runtime=1000000 -group_reporting -name=mytest1 &
+cgexec -g cpu:fio_root/fio12 fio -filename=/dev/sda -direct=1 -iodepth 1 -thread -rw=read -ioengine=psync -bs=16k -size=1000M -numjobs=100 -runtime=1000000 -group_reporting -name=mytest1 &
+cgexec -g cpu:fio_root/fio13 fio -filename=/dev/sda -direct=1 -iodepth 1 -thread -rw=read -ioengine=psync -bs=16k -size=1000M -numjobs=100 -runtime=1000000 -group_reporting -name=mytest1 &
+cgexec -g cpu:fio_root/fio14 fio -filename=/dev/sda -direct=1 -iodepth 1 -thread -rw=read -ioengine=psync -bs=16k -size=1000M -numjobs=100 -runtime=1000000 -group_reporting -name=mytest1 &
+cgexec -g cpu:fio_root/fio15 fio -filename=/dev/sda -direct=1 -iodepth 1 -thread -rw=read -ioengine=psync -bs=16k -size=1000M -numjobs=100 -runtime=1000000 -group_reporting -name=mytest1 &
+cgexec -g cpu:fio_root/fio16 fio -filename=/dev/sda -direct=1 -iodepth 1 -thread -rw=read -ioengine=psync -bs=16k -size=1000M -numjobs=100 -runtime=1000000 -group_reporting -name=mytest1 &

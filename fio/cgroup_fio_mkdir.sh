@@ -1,0 +1,16 @@
+mkdir -p fio_root/fio1 
+mkdir -p fio_root/fio2 
+mkdir -p fio_root/fio3 
+mkdir -p fio_root/fio4 
+mkdir -p fio_root/fio5 
+mkdir -p fio_root/fio6 
+mkdir -p fio_root/fio7 
+mkdir -p fio_root/fio8 
+mkdir -p fio_root/fio9 
+mkdir -p fio_root/fio10
+mkdir -p fio_root/fio11
+mkdir -p fio_root/fio12
+mkdir -p fio_root/fio13
+mkdir -p fio_root/fio14
+mkdir -p fio_root/fio15
+mkdir -p fio_root/fio16
