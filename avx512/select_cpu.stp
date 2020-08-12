@@ -1,0 +1,49 @@
+#!/usr/local/bin/stap
+
+global init_time
+global cn
+global curr_cpu
+global proc_name
+
+probe begin{
+        printf("Press ^C to stop\n")
+        init_time = gettimeofday_ms()
+        cn = 0
+}
+
+# Switch done
+probe kernel.function("select_task_rq_fair")
+{
+        proc_name = kernel_string(@cast($p, "task_struct")->comm)
+        if (proc_name == "schbench") {
+                curr_cpu[cpu()] = 1
+		printf("==============================\n")
+#                print_backtrace()
+        }
+}
+
+probe kernel.function("select_task_rq_fair").return
+{
+        if (curr_cpu[cpu()]) {
+                printf("return cpu:%d assigned to %s\n", $return, proc_name)
+                curr_cpu[cpu()] = 0
+        }
+}
+
+# Switch done
+probe kernel.trace("sched:sched_debug")
+{
+	if (curr_cpu[cpu()] && $flag > 56555)
+		printf("cpu=%d, cpumask =%d, value =%d flag = %d\n", $cpu, $cpumask, $interval, $flag)
+}
+
+probe timer.s(100)
+{
+        cn++
+        if (cn > 0)
+                exit()
+}
+
+probe end {
+        printf("Total time: %d miliseconds\n", gettimeofday_ms() - init_time)
+}

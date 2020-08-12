@@ -1,0 +1,35 @@
+#!/usr/local/bin/stap
+
+global init_time
+global cn
+global curr_cpu
+global proc_name
+
+probe begin{
+        printf("Press ^C to stop\n")
+        init_time = gettimeofday_ms()
+        cn = 0
+}
+
+# Switch done
+probe kernel.function("set_task_cpu")
+{
+	if ($new_cpu == 0) {
+	        proc_name = kernel_string(@cast($p, "task_struct")->comm)
+		printf("proc_name = %s\n", proc_name)
+       		if (proc_name == "schbench") {
+	                print_backtrace()
+		}
+        }
+}
+
+probe timer.s(10)
+{
+        cn++
+        if (cn > 0)
+                exit()
+}
+
+probe end {
+        printf("Total time: %d miliseconds\n", gettimeofday_ms() - init_time)
+}

@@ -1,0 +1,69 @@
+#!/usr/local/bin/stap
+
+global init_time
+global cn
+global curr_cpu
+global proc_name
+global prev_name
+global next_name
+
+probe begin{
+        printf("Press ^C to stop\n")
+        init_time = gettimeofday_ms()
+        cn = 0
+}
+
+probe scheduler.ctxswitch
+{
+        prev_name = prev_task_name
+        next_name = next_task_name
+}
+
+
+# Switch done
+probe kernel.function("select_task_rq_fair")
+{
+        proc_name = kernel_string(@cast($p, "task_struct")->comm)
+        if (proc_name == "gemmbench") {
+                curr_cpu[cpu()] = 1
+		printf("==============================\n")
+		printf("pid = %d\n", $p->pid)
+#                print_backtrace()
+        }
+}
+
+probe kernel.function("select_task_rq_fair").return
+{
+        if (curr_cpu[cpu()]) {
+                printf("return cpu:%d assigned to %s\n", $return, proc_name)
+                curr_cpu[cpu()] = 0
+        }
+}
+
+# Switch done
+probe kernel.trace("sched:sched_debug")
+{
+	if (curr_cpu[cpu()] && $flag == 55555)
+		printf("cpu=%d, cpumask =%d, value =%d flag = %d\n", $cpu, $cpumask, $interval, $flag)
+}
+
+# Switch done
+probe kernel.trace("x86_fpu:x86_fpu_regs_deactivated")
+{
+                xinuse = $fpu->is_avx
+                cpu = $fpu->last_cpu
+		pid = $fpu->last_pid
+                printf("old cpu:%d, pid: %d, xinuse: 0x%x\t\t%s\t-\t%s\n",
+                        cpu, pid, xinuse, prev_name, next_name)
+}
+
+probe timer.s(10)
+{
+        cn++
+        if (cn > 0)
+                exit()
+}
+
+probe end {
+        printf("Total time: %d miliseconds\n", gettimeofday_ms() - init_time)
+}

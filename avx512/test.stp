@@ -1,0 +1,38 @@
+#!/usr/local/bin/stap
+
+global init_time
+global cn
+global prev_name
+global next_name
+
+probe begin{
+        printf("Press ^C to stop\n")
+        init_time = gettimeofday_ms()
+        cn = 0
+}
+
+probe scheduler.ctxswitch
+{
+	prev_name = prev_task_name
+	next_name = next_task_name
+}
+
+# Switch done
+probe kernel.trace("x86_fpu:x86_fpu_regs_deactivated")
+{
+	avx = $fpu->has_avx
+	cpu = $fpu->last_cpu
+		printf("old cpu:%d, has_avx: 0x%x\t\t%s\t-\t%s\n",
+			cpu, avx, prev_name, next_name)
+}
+
+probe timer.s(100)
+{
+        cn++
+        if (cn > 0)
+                exit()
+}
+
+probe end {
+        printf("Total time: %d miliseconds\n", gettimeofday_ms() - init_time)
+}
