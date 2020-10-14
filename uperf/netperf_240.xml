@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<profile name="netperf">
+  <group nthreads="240">
+        <transaction iterations="1">
+            <flowop type="accept" options="remotehost=127.0.0.1 protocol=TCP
+	    wndsz=50k tcp_nodelay"/>
+        </transaction>
+        <transaction duration="100s">
+            <flowop type="write" options="size=90"/>
+            <flowop type="read" options="size=90"/>
+        </transaction>
+        <transaction iterations="1">
+            <flowop type="disconnect" />
+        </transaction>
+  </group>
+</profile>
